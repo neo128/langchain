@@ -1,0 +1,10 @@
+langchain>=0.1.16
+langchain-openai>=0.0.8
+langchain-community>=0.0.20
+langgraph>=0.1.15
+langserve>=0.0.46
+fastapi>=0.110.0
+uvicorn>=0.28.0
+sse-starlette>=2.0.0
+langsmith>=0.1.16
+python-dotenv>=1.0.0
