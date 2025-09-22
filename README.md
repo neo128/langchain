@@ -6,11 +6,12 @@
 - 使用 Prompt 与 Chain 构建基础问答流程
 - 通过 ConversationChain 管理对话状态
 - 使用 LangGraph 编排多分支链路
-- 使用 LangServe + FastAPI 将链/图产品化
 - 使用 LangSmith 记录链路轨迹与数据集
 - 使用函数调用 (tool calling) 让模型触发外部工具（学习路径 / 系统信息 / 摄像头）
 - 交互式演示，通过终端实时输入问题触发工具
 - 使用 `python-dotenv` 加载 DashScope & LangSmith 配置
+- 新增 RAG 示例：BM25 检索 + Qwen 生成（含离线降级）
+- 新增 Chainlit 聊天界面：最小可运行 Demo，集成工具调用问答
 
 ## 环境准备
 
@@ -49,21 +50,35 @@ python src/langsmith_demo.py         # LangSmith 追踪与数据集演示（需�
 python src/tool_call_demo.py         # 函数调用示例（学习路径 / 系统信息 / 摄像头）
 python src/tool_call_interact.py     # 交互式函数调用示例
 python src/mock_chain.py             # FakeListLLM 离线演示
+python src/rag_demo.py               # RAG（BM25 检索 + Qwen 生成），无 Key 自动降级离线
 
-uvicorn src.langserve_app:app --reload  # LangServe + FastAPI 服务，暴露链/图接口
+# 启动 Chainlit 聊天界面（集成工具调用问答）
+chainlit run src/chainlit_app.py -w
 ```
 
-LangServe 启动后，可访问 `http://127.0.0.1:8000/docs` 体验自动生成的 Swagger UI，或直接调用：
+## 使用 Chainlit 聊天界面
+
+本项目提供了一个最小可运行的 Chainlit + LangChain 聊天 Demo，底层复用 `tool_call_demo.py` 中的函数调用（工具：学习路径、系统信息、打开摄像头）。
+
+启动命令：
 
 ```bash
-curl -X POST http://127.0.0.1:8000/chains/learning-helper/invoke \
-  -H "Content-Type: application/json" \
-  -d '{"input":{"topic":"Memory 模块"}}'
-
-curl -X POST http://127.0.0.1:8000/graphs/topic-router/invoke \
-  -H "Content-Type: application/json" \
-  -d '{"input":{"question":"我要学习 LangChain 的 tool 模块"}}'
+chainlit run src/chainlit_app.py -w
 ```
+
+提示：
+
+- 首次运行会生成 `.chainlit/` 配置目录与 `chainlit.md`，可据此自定义 UI、国际化与欢迎文案。
+- Chainlit 默认监听 8000 端口，如已被 `uvicorn` 占用，请改端口：
+  ```bash
+  chainlit run src/chainlit_app.py -w -p 8001
+  ```
+- 在聊天框中可以直接输入：
+  - “LangChain 的 tool 模块应该怎么学？”
+  - “帮我查看电脑 CPU、内存和今天的日期。”
+  - “帮我打开摄像头窗口。”
+- 未配置 `DASHSCOPE_API_KEY` 时，模型回答可能受影响，但工具调用依旧可用。
+- 摄像头工具会尝试启动本机相机应用（按系统而异），请注意隐私与权限授权。
 
 ## 目录结构说明
 
@@ -77,11 +92,12 @@ curl -X POST http://127.0.0.1:8000/graphs/topic-router/invoke \
     ├── basic_chain.py
     ├── conversation_demo.py
     ├── langgraph_demo.py
-    ├── langserve_app.py
     ├── langsmith_demo.py
     ├── tool_call_demo.py
     ├── tool_call_interact.py
     ├── mock_chain.py
+    ├── rag_demo.py
+    ├── chainlit_app.py
     └── qwen_utils.py
 ```
 
@@ -95,10 +111,8 @@ curl -X POST http://127.0.0.1:8000/graphs/topic-router/invoke \
 
 - 阅读 [LangChain 官方文档](https://python.langchain.com/docs/introduction/) 获取更丰富的组件介绍。
 - 阅读 [LangGraph 文档](https://langchain-ai.github.io/langgraph/) 了解图形化编排、检查点与并行执行等特性。
-- 阅读 [LangServe 文档](https://python.langchain.com/docs/langserve) 学习部署、鉴权、监控最佳实践。
 - 阅读 [LangSmith 文档](https://docs.smith.langchain.com/) 掌握评估、对比、自动化测试流程。
 - 在 `tool_call_demo.py` / `tool_call_interact.py` 的基础上扩展更多工具，例如检索、代码执行、系统监控、音视频控制等能力。
 - 在 `langgraph_demo.py` 中尝试新增节点或使用持久化检查点，体验更复杂的工作流管理。
-- 在 `langserve_app.py` 中添加流式响应、鉴权或自定义中间件，探索服务化最佳实践。
 - 在 `langsmith_demo.py` 中将 FakeListLLM 替换为真实模型，体验端到端的调试与评估。
 - 在 `mock_chain.py` 的基础上，尝试串联加载器、向量存储等更高级的链式流程。
