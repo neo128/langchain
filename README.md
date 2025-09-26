@@ -12,6 +12,7 @@
 - 使用 `python-dotenv` 加载 DashScope & LangSmith 配置
 - 新增 RAG 示例：BM25 检索 + Qwen 生成（含离线降级）
 - 新增 Chainlit 聊天界面：最小可运行 Demo，集成工具调用问答
+ - 新增 Shell 命令执行 Demo（危险，默认 DRY-RUN）：让 LangChain 调用 pip/cp/mv 等
 
 ## 环境准备
 
@@ -51,6 +52,7 @@ python src/tool_call_demo.py         # 函数调用示例（学习路径 / 系�
 python src/tool_call_interact.py     # 交互式函数调用示例
 python src/mock_chain.py             # FakeListLLM 离线演示
 python src/rag_demo.py               # RAG（BM25 检索 + Qwen 生成），无 Key 自动降级离线
+python src/shell_tool_demo.py        # Shell 命令执行 Demo（危险，默认 DRY-RUN）
 
 # 启动 Chainlit 聊天界面（集成工具调用问答）
 chainlit run src/chainlit_app.py -w
@@ -79,6 +81,29 @@ chainlit run src/chainlit_app.py -w
   - “帮我打开摄像头窗口。”
 - 未配置 `DASHSCOPE_API_KEY` 时，模型回答可能受影响，但工具调用依旧可用。
 - 摄像头工具会尝试启动本机相机应用（按系统而异），请注意隐私与权限授权。
+
+## Shell 命令执行 Demo（危险操作）
+
+本示例允许模型通过工具执行终端命令（pip/cp/mv/任意 shell）。默认不会真正执行，需显式开启：
+
+1. 在 `.env` 中设置（见 `.env.example`）：
+   ```env
+   ALLOW_SHELL=1
+   ```
+   若未开启，将进入 DRY-RUN 模式，仅打印将要执行的命令，不做任何修改。
+2. 运行示例：
+   ```bash
+   python src/shell_tool_demo.py
+   ```
+3. 交互框中可尝试：
+   - “用 pip 安装 requests 包”
+   - “把 README.md 复制到 .files/readme.copy.md”
+   - “把 .files/readme.copy.md 移动到 .files/readme.moved.md”
+   - “执行一个 shell 命令：echo hello && python --version”
+
+安全提醒：
+- 仍内置黑名单拦截高危命令（如 `sudo`、`rm -rf`、`mkfs` 等），但无法覆盖所有破坏性场景，请在受控环境中使用。
+- 建议将工作目录限制在沙箱/临时目录内，或使用容器运行。
 
 ## 目录结构说明
 

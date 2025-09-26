@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from dotenv import load_dotenv
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 
@@ -20,7 +19,11 @@ def build_chain(model: str = "qwen3-coder-plus") -> ConversationChain:
 
 
 def main() -> None:
-    load_dotenv()
+    try:
+        from .env_utils import init_env  # type: ignore
+    except Exception:
+        from env_utils import init_env  # type: ignore
+    init_env()
     chain = build_chain()
     user_inputs = [
         "我想学 LangChain，需要掌握哪些前置知识？",

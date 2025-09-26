@@ -9,7 +9,6 @@ import shutil
 import subprocess
 from typing import Literal, Optional, Sequence
 
-from dotenv import load_dotenv
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
@@ -237,7 +236,11 @@ def route_and_answer(question: str) -> str:
 
 
 def main() -> None:
-    load_dotenv()
+    try:
+        from .env_utils import init_env  # type: ignore
+    except Exception:
+        from env_utils import init_env  # type: ignore
+    init_env()
     questions = [
        
         "顺便帮我看看这台电脑的 CPU 和内存情况，以及今天日期。",
