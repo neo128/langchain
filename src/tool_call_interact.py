@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 
+from dotenv import load_dotenv
 
 from tool_call_demo import route_and_answer
 
@@ -18,11 +19,7 @@ _PROMPT = (
 
 
 def interactive_loop() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     print("== LangChain Tool 调用交互演示 ==")
     print(_PROMPT)
 

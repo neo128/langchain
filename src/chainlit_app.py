@@ -13,6 +13,7 @@ from __future__ import annotations
 import asyncio
 
 import chainlit as cl
+from dotenv import load_dotenv
 
 try:  # 支持包内与脚本直接运行
     from .tool_call_demo import route_and_answer  # type: ignore
@@ -33,11 +34,7 @@ WELCOME = (
 
 @cl.on_chat_start
 async def on_chat_start():
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     await cl.Message(content=WELCOME).send()
 
 

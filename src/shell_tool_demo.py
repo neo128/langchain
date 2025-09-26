@@ -22,6 +22,7 @@ import sys
 from dataclasses import dataclass
 from typing import Optional
 
+from dotenv import load_dotenv
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
@@ -243,14 +244,11 @@ def interactive_loop() -> None:
 
 
 def main() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     # 若需要快速预览，可调用 demo_conversations()；这里默认进入交互模式
     interactive_loop()
 
 
 if __name__ == "__main__":
     main()
+

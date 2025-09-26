@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from typing import Literal, TypedDict
 
+from dotenv import load_dotenv
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, StateGraph
@@ -192,11 +193,7 @@ def run_examples(graph) -> None:
 
 
 def main() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     if not os.getenv("DASHSCOPE_API_KEY"):
         raise RuntimeError("请先在 .env 中配置 DASHSCOPE_API_KEY 后再运行示例。")
 

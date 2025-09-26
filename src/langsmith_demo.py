@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from typing import Iterable
 
+from dotenv import load_dotenv
 from langchain.chains import LLMChain
 from langchain_community.llms.fake import FakeListLLM
 from langchain_core.prompts import PromptTemplate
@@ -66,11 +67,7 @@ def ensure_dataset(client: Client) -> str:
 
 
 def main() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
 
     api_key = os.getenv("LANGCHAIN_API_KEY")
     tracing_enabled = os.getenv("LANGCHAIN_TRACING_V2", "").lower() == "true"

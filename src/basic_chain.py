@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dotenv import load_dotenv
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 
@@ -23,11 +24,7 @@ def build_chain(model: str = "qwen3-coder-plus") -> LLMChain:
 
 
 def main() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     chain = build_chain()
     topic = "LangChain 的核心组件"
     response = chain.invoke({"topic": topic})

@@ -11,6 +11,7 @@ from __future__ import annotations
 from operator import itemgetter
 from typing import List
 
+from dotenv import load_dotenv
 from langchain_community.retrievers import BM25Retriever
 from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
@@ -140,11 +141,7 @@ def answer_question(question: str) -> str:
 
 
 def main() -> None:
-    try:
-        from .env_utils import init_env  # type: ignore
-    except Exception:
-        from env_utils import init_env  # type: ignore
-    init_env()
+    load_dotenv()
     examples = [
         "RAG 的核心流程是什么？",
         "没有向量数据库时如何先做一个检索问答？",
@@ -160,3 +157,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

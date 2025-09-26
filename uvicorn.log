@@ -1,0 +1,42 @@
+INFO:     Will watch for changes in these directories: ['/Users/neoone/code/Langchain']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [78090] using StatReload
+INFO:     Started server process [78093]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+
+     __          ___      .__   __.   _______      _______. _______ .______     ____    ____  _______
+    |  |        /   \     |  \ |  |  /  _____|    /       ||   ____||   _  \    \   \  /   / |   ____|
+    |  |       /  ^  \    |   \|  | |  |  __     |   (----`|  |__   |  |_)  |    \   \/   /  |  |__
+    |  |      /  /_\  \   |  . `  | |  | |_ |     \   \    |   __|  |      /      \      /   |   __|
+    |  `----./  _____  \  |  |\   | |  |__| | .----)   |   |  |____ |  |\  \----.  \    /    |  |____
+    |_______/__/     \__\ |__| \__|  \______| |_______/    |_______|| _| `._____|   \__/     |_______|
+    
+[1;32;40mLANGSERVE:[0m Playground for chain "/chains/learning-helper/" is live at:
+[1;32;40mLANGSERVE:[0m  │
+[1;32;40mLANGSERVE:[0m  └──> /chains/learning-helper/playground/
+[1;32;40mLANGSERVE:[0m
+[1;32;40mLANGSERVE:[0m Playground for chain "/graphs/topic-router/" is live at:
+[1;32;40mLANGSERVE:[0m  │
+[1;32;40mLANGSERVE:[0m  └──> /graphs/topic-router/playground/
+[1;32;40mLANGSERVE:[0m
+[1;32;40mLANGSERVE:[0m See all available routes at /docs/
+INFO:     127.0.0.1:64945 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64958 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64961 - "POST /chains/learning-helper/invoke HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64993 - "POST /chains/learning-helper/invoke HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65009 - "POST /graphs/topic-router/invoke HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49496 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49547 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49547 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49560 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49560 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49659 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49676 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49681 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50314 - "POST /chains/learning-helper/invoke HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50358 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50358 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50332 - "POST /graphs/topic-router/invoke HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50413 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52515 - "POST /chains/learning-helper/invoke HTTP/1.1" 200 OK
